@@ -1,0 +1,650 @@
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  font-family: Arial, sans-serif;
+}
+
+/* =========================
+   Toolbar
+   ========================= */
+
+.toolbar {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-bottom: 1px solid #ddd;
+  color: black;
+  background: white;
+  flex-wrap: wrap;
+}
+
+.import-button {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f5f5f5;
+  cursor: pointer;
+  color: black;
+  white-space: nowrap;
+}
+
+.import-button:hover {
+  background: #eaeaea;
+}
+
+.toolbar button {
+  padding: 7px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f5f5f5;
+  cursor: pointer;
+  color: black;
+  white-space: nowrap;
+}
+
+.toolbar button:hover:not(:disabled) {
+  background: #eaeaea;
+}
+
+.toolbar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tool-button {
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.tool-button.active {
+  background: #d9e8ff;
+  border-color: #4a90e2;
+  color: black;
+  font-weight: bold;
+}
+
+.export-button {
+  background: #d9e8ff;
+  border-color: #4a90e2;
+  font-weight: bold;
+  margin-left: auto;
+}
+
+/* =========================
+   Selected Label
+   ========================= */
+
+.selected-label-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+  color: black;
+}
+
+.selected-label-control label {
+  white-space: nowrap;
+}
+
+.selected-label-control select {
+  min-width: 130px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  color: black;
+  cursor: pointer;
+}
+
+/* =========================
+   Brush Size
+   ========================= */
+
+.brush-size-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+  color: black;
+}
+
+.brush-size-control label {
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.brush-size-control select {
+  min-width: 70px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  color: black;
+  cursor: pointer;
+}
+
+/* =========================
+   Zoom
+   ========================= */
+
+.zoom-control {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  color: black;
+}
+
+.zoom-control select {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  color: black;
+}
+
+/* =========================
+   Workspace
+   ========================= */
+
+.workspace {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  color: black;
+}
+
+/* =========================
+   Left Image List
+   ========================= */
+
+.image-list {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ddd;
+  background: #fafafa;
+  flex-shrink: 0;
+  color: black;
+}
+
+.image-list-header {
+  padding: 12px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  color: black;
+}
+
+.image-list-items {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.image-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  color: black;
+}
+
+.image-item:hover {
+  background: #eee;
+}
+
+.image-item.selected {
+  background: #ddd;
+}
+
+.thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  background: #eee;
+  border: 1px solid #ccc;
+  flex-shrink: 0;
+}
+
+.image-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: black;
+}
+
+/* =========================
+   Canvas
+   ========================= */
+
+.canvas-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  background: #e9e9e9;
+  padding: 20px;
+  color: black;
+}
+
+.canvas-wrapper {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  flex-shrink: 0;
+  border: 1px solid #999;
+  background: white;
+  user-select: none;
+}
+
+.canvas-wrapper canvas {
+  display: block;
+}
+
+/* =========================
+   Right Sidebar Layout
+   ========================= */
+
+.label-panel {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #ddd;
+  background: #fafafa;
+  flex-shrink: 0;
+  color: black;
+  height: 100%;
+  overflow: hidden;
+}
+
+.label-panel-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+  background: #fafafa;
+}
+
+.label-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.annotation-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* =========================
+   Create Label Input Block
+   ========================= */
+
+.label-create {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+  background: #fafafa;
+}
+
+.label-create > input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: black;
+  background: white;
+}
+
+.label-create-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.label-create-row input[type="color"] {
+  width: 38px;
+  height: 32px;
+  padding: 2px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+.label-create-row button {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f5f5f5;
+  color: black;
+  cursor: pointer;
+}
+
+.label-create-row button:hover {
+  background: #eaeaea;
+}
+
+/* =========================
+   Independent Scrollable Lists
+   ========================= */
+
+.label-list,
+.annotation-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: white;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.label-item.selected {
+  border-color: #4a90e2;
+  background: #eef6ff;
+}
+
+.label-color {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  border-radius: 50%;
+  border: 1px solid #999;
+}
+
+.label-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: black;
+}
+
+.label-edit-input {
+  flex: 1;
+  min-width: 0;
+  padding: 4px 6px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  color: black;
+}
+
+.label-item button {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f5f5f5;
+  color: black;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.label-item button:hover {
+  background: #eaeaea;
+}
+
+.annotation-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: white;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.annotation-item.selected {
+  border-color: #4a90e2;
+  background: #eef6ff;
+}
+
+.annotation-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.annotation-name {
+  font-weight: bold;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: black;
+}
+
+.annotation-type {
+  font-size: 10px;
+  color: black;
+  opacity: 0.7;
+}
+
+.annotation-item button {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f5f5f5;
+  color: black;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.annotation-item button:hover {
+  background: #eaeaea;
+}
+
+.no-labels {
+  padding: 16px 8px;
+  text-align: center;
+  color: #777;
+  font-size: 14px;
+}
+
+/* =========================
+   Modal Popup Window & Attributes
+   ========================= */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 6px;
+  width: 480px;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  color: black;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: black;
+}
+
+.attribute-create {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.attribute-create input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: black;
+  background: white;
+}
+
+.attribute-create button {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f5f5f5;
+  color: black;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.attribute-create button:hover {
+  background: #eaeaea;
+}
+
+.attribute-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.attribute-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #eef6ff;
+  border: 1px solid #4a90e2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: black;
+}
+
+.attribute-chip button {
+  padding: 2px 6px;
+  border: none;
+  background: transparent;
+  color: black;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.attribute-chip button:hover {
+  color: red;
+}
+
+.no-attributes {
+  font-size: 12px;
+  color: #777;
+  font-style: italic;
+}
+
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  background: #fafafa;
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.modal-body pre {
+  margin: 0;
+  font-family: monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: black;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.modal-actions button {
+  padding: 6px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f5f5f5;
+  color: black;
+  cursor: pointer;
+}
+
+.modal-actions button:hover {
+  background: #eaeaea;
+}
+
+/* =========================
+   General Interactions
+   ========================= */
+
+button,
+select,
+input {
+  font-family: inherit;
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid #4a90e2;
+  outline-offset: 1px;
+}
+
+.canvas-wrapper {
+  cursor: default;
+}
